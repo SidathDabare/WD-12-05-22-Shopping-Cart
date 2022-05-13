@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style>
+      .container{
+        background-color: #131921;
+      }
+      .card-img-top{
+        max-width: 70%;
+        height: 300px;
+        width: 200px;
+        object-fit: contain;
+        margin: 0 auto;
+      }
+        a.nav-link {
+        color: white;
+        text-decoration: none;
+        margin-right: 20px;
+      }
+     a.navbar-brand{
+       color: white;
+       
+     }
+
+    </style>
+
+    <title>Hello, world!</title>
   </head>
   <body>
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous"
-        />
-
-        <title>Hello, world!</title>
-      </head>
-      <body>
-          <div class="container row col-11">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+           <div class="container row col-12 m-auto">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
                     <a class="navbar-brand" href="#">Shopping Cart</a>
                     <button
                     class="navbar-toggler"
@@ -41,12 +53,15 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="#"
-                            >Backoffice Page</a
+                        <a class="nav-link active" aria-current="page" href="./backoffice.html"
+                            >Backoffice</a
                         >
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="#">Edit</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="./product-page.html">Product Details</a>
                         </li>
                     </ul>
                     <!-- <form class="d-flex">
@@ -64,37 +79,90 @@
                 </div>
             </nav>
           </div>
-          <div class="container row col-6 m-auto" id="row">
-            <form>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
-         
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Price</label>
-              <input type="number" class="form-control" id="price" aria-describedby="emailHelp">
-         
-            </div>
-          
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Desc</label>
-              <input type="text" class="form-control" id="description" aria-describedby="emailHelp">
-         
-            </div>
-            
-            <button onclick="postPrducts(event)" type="submit" class="btn btn-primary">Submit</button>
-          </form>
+          <div class="container-fluid col-10 mt-5 p-n5">
+            <div class="row col-12 m-auto" id="productsContainer"></div>
           </div>
-   
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const endpoint = "https://striveschool-api.herokuapp.com/api/product/";
+        // const options = {
+        //   headers: {
+        //     Authorization:
+        //       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdjZjg3MzZkMDZiOTAwMTUyZWYyOGMiLCJpYXQiOjE2NTIzNTcyMzUsImV4cCI6MTY1MzU2NjgzNX0.uJ9IcyjqqB2WQ842oL3FhYbxUU6dfUJGcMMwlTDZFa4",
+        //     "Content-Type": "application/json",
+        //   },
+        // };
+window.onload = () => {
+loadProducts();
+};
 
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-          crossorigin="anonymous"
-        ></script>
-    <script src="index.js"></script>
-      </body>
-    </html>
+const loadProducts = async () => {
+  try {
+    const response = await fetch(endpoint, {
+      method: "GET",
+      body: JSON.stringify(),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjdjZjg3MzZkMDZiOTAwMTUyZWYyOGMiLCJpYXQiOjE2NTIzNTcyMzUsImV4cCI6MTY1MzU2NjgzNX0.uJ9IcyjqqB2WQ842oL3FhYbxUU6dfUJGcMMwlTDZFa4",
+      },
+    });
+    const products = await response.json();
+    //console.log(products);
+    renderProducts(products);
+  } catch (err) {
+    console.log(err);
+  }
+  console.log("HERE");
+};
+
+const renderProducts = (products) => {
+    const row = document.querySelector("#productsContainer");
+    //row.innerHTML = "";
+    if (Array.isArray(products)) {
+        products.forEach((product) => {
+          //console.log(product)
+        const col = document.createElement("div");
+        // col.className = "col-6 col-sm-3 col-md-4 col-lg-4 mb-2 px-2";
+       row.innerHTML += `<div class="card col-6 col-sm-4 col-md-4 col-lg-3 mb-2 border-0">
+                                <img src=${product.imageUrl} class="card-img-top" alt="...">
+                                <div class="card-body p-2">
+                                    <small class="text-muted font-weight-bold">Id: ${product._id}</small>
+                                    <h5 class="card-title">${product.brand}</h5>
+                                    <small class="card-text">${product.description}</small>
+                                    <h4 class="card-text font-weight-bold">$${product.price}</h4>
+
+                                    <button class="btn btn-primary col-12 col-md-8 addToCart">ADD TO CART</button>
+                                   
+                                    <a class="btn btn-info col-12 col-md-8" href="./product-page.html?productId=${product._id}">UPDATE</a>
+                                    <button class="btn btn-danger col-12 col-md-8 d-none" onclick="deleteProduct()">DELETE</button>
+                                </div>
+                            </div>`;
+                            editButton()
+         //row.appendChild("col")
+      return products
+        });
+    } else {
+        alert("provide a valid array");
+    }
+    };
+    const editButton=()=>{
+     const editBtn=document.querySelectorAll(".editBtn") 
+     editBtn.forEach((btn)=>{
+       btn.addEventListener("click",()=>{
+         console.log("first")
+       })
+     })
+    }
+    const deleteProduct=()=>{
+      console.log("first")
+    }
+
+  
+    </script>
   </body>
 </html>
